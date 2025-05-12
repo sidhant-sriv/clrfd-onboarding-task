@@ -6,6 +6,9 @@ import { SettingsModule } from './settings/settings.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { Account } from './accounts/account.model';
 import { Settings } from './settings/settings.model';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './user/user.model';
 
 @Module({
   imports: [
@@ -14,11 +17,13 @@ import { Settings } from './settings/settings.model';
       storage: 'database.sqlite',
       autoLoadModels: true,
       synchronize: true,
-      sync: { force: true },
-      models: [Account, Settings],
+      sync: { force: false },
+      models: [Account, Settings, User],
     }),
     SettingsModule,
     AccountsModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

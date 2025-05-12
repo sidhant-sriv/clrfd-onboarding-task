@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSettingDto } from './dto/create-setting.dto';
-import { UpdateSettingDto } from './dto/update-setting.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Settings } from './settings.model';
 
 @Injectable()
 export class SettingsService {
-  create(createSettingDto: CreateSettingDto) {
-    return 'This action adds a new setting';
+  constructor(
+    @InjectModel(Settings)
+    private settingsModel: typeof Settings,
+  ) {}
+
+  async findAll(): Promise<Settings[]> {
+    return this.settingsModel.findAll();
   }
 
-  findAll() {
-    return `This action returns all settings`;
+  async findOne(id: number): Promise<Settings | null> {
+    return this.settingsModel.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} setting`;
+  async create(settings: Partial<Settings>): Promise<Settings> {
+    return this.settingsModel.create(settings);
   }
-
-  update(id: number, updateSettingDto: UpdateSettingDto) {
-    return `This action updates a #${id} setting`;
+  async update(
+    id: number,
+    settings: Partial<Settings>,
+  ): Promise<[number, Settings[]]> {
+    return this.settingsModel.update(settings, {
+      where: {
+        id,
+      },
+      returning: true,
+    });
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} setting`;
+  async remove(id: number): Promise<number> {
+    return this.settingsModel.destroy({
+      where: {
+        id,
+      },
+    });
   }
 }
