@@ -8,7 +8,8 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
-import type { AuthService } from './auth/auth.service';
+// biome-ignore lint/style/useImportType: <explanation>
+import { AuthService } from './auth/auth.service';
 
 @Controller()
 export class AppController {

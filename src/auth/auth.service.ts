@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import type { UserService } from 'src/user/user.service';
-import type { JwtService } from '@nestjs/jwt';
+// biome-ignore lint/style/useImportType: <explanation>
+import { UserService } from 'src/user/user.service';
+// biome-ignore lint/style/useImportType: <explanation>
+import { JwtService } from '@nestjs/jwt';
 import type { User } from 'src/user/user.model';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UserService,
-    private jwtService: JwtService,
+    private readonly usersService: UserService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async validateUser(name: string, pass: string): Promise<User | null> {
