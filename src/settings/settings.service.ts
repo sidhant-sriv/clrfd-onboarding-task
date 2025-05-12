@@ -13,6 +13,14 @@ export class SettingsService {
     return this.settingsModel.findAll();
   }
 
+  async findByAccounts(accountIds: number[]): Promise<Settings[]> {
+    return this.settingsModel.findAll({
+      where: {
+        account_id: accountIds,
+      },
+    });
+  }
+
   async findOne(id: number): Promise<Settings | null> {
     return this.settingsModel.findOne({
       where: {
